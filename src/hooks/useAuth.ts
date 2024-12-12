@@ -1,8 +1,8 @@
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-hot-toast';
-import { useAuthStore } from '../stores/authStore';
-import { authService } from '../services/auth';
-import type { LoginCredentials } from '../types/auth';
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { useAuthStore } from "../stores/authStore";
+import { authService } from "../services/auth";
+import type { LoginCredentials } from "../types/auth";
 
 export function useAuth() {
   const navigate = useNavigate();
@@ -10,22 +10,27 @@ export function useAuth() {
 
   const login = async (credentials: LoginCredentials) => {
     try {
-      const response = await authService.login(credentials);
-      localStorage.setItem('token', response.access_token);
-      const user = await authService.getProfile();
+      const user = await authService.login(credentials);
       setUser(user);
-      toast.success('Login successful!');
-      navigate('/');
+      toast.success("Login successful!");
+      navigate("/");
     } catch (error) {
-      toast.error('Invalid credentials');
+      toast.error("Invalid credentials");
       throw error;
     }
   };
 
-  const logout = () => {
-    storeLogout();
-    navigate('/login');
-    toast.success('Logged out successfully');
+  const logout = async () => {
+    try {
+      const response = await authService.logout();
+      console.log(response);
+      storeLogout();
+      navigate("/login");
+      toast.success("Logged out successfully");
+    } catch (error) {
+      toast.error("Internal server error");
+      throw error;
+    }
   };
 
   return {

@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { User } from '../types/auth';
+import { create } from "zustand";
+import { User } from "../types/auth";
 
 interface AuthState {
   user: User | null;
@@ -13,7 +13,6 @@ export const useAuthStore = create<AuthState>((set) => ({
   isAuthenticated: false,
   setUser: (user) => set({ user, isAuthenticated: !!user }),
   logout: () => {
-    localStorage.removeItem('token');
     set({ user: null, isAuthenticated: false });
   },
 }));

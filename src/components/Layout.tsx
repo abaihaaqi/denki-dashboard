@@ -1,15 +1,16 @@
-import React from 'react';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
-import { LogOut, ShoppingBag, User } from 'lucide-react';
-import { useAuthStore } from '../stores/authStore';
+import { Link, Outlet } from "react-router-dom";
+import { LogOut, User } from "lucide-react";
+import { useAuthStore } from "../stores/authStore";
+
+import Logo from "../assets/logo.png";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Layout() {
-  const { isAuthenticated, logout } = useAuthStore();
-  const navigate = useNavigate();
+  const { isAuthenticated } = useAuthStore();
+  const { logout } = useAuth();
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
   };
 
   return (
@@ -19,8 +20,8 @@ export default function Layout() {
           <div className="flex justify-between h-16">
             <div className="flex">
               <Link to="/" className="flex items-center">
-                <ShoppingBag className="h-6 w-6 text-indigo-600" />
-                <span className="ml-2 text-xl font-semibold">ProductHub</span>
+                <img src={Logo} className="w-10" />
+                <span className="ml-2 text-xl font-semibold">Dashboard</span>
               </Link>
             </div>
             <div className="flex items-center">

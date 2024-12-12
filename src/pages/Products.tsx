@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
-import { Plus } from 'lucide-react';
-import ProductCard from '../components/products/ProductCard';
-import ProductForm from '../components/products/ProductForm';
-import Modal from '../components/ui/Modal';
-import { useProducts } from '../hooks/useProducts';
-import type { Product } from '../types/product';
+import { useState } from "react";
+import { Plus } from "lucide-react";
+import ProductCard from "../components/products/ProductCard";
+import ProductForm from "../components/products/ProductForm";
+import Modal from "../components/ui/Modal";
+import { useProducts } from "../hooks/useProducts";
+import type { Product } from "../types/product";
 
 export default function Products() {
-  const { products, isLoading, createProduct, updateProduct, deleteProduct } = useProducts();
+  const { products, isLoading, createProduct, updateProduct, deleteProduct } =
+    useProducts();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  const handleCreate = (data: Omit<Product, 'id'>) => {
+  const handleCreate = (data: Omit<Product, "id">) => {
     createProduct(data, {
       onSuccess: () => {
         setIsModalOpen(false);
@@ -78,7 +79,7 @@ export default function Products() {
       <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        title={selectedProduct ? 'Edit Product' : 'Add Product'}
+        title={selectedProduct ? "Edit Product" : "Add Product"}
       >
         <ProductForm
           initialData={selectedProduct ?? undefined}
