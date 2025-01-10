@@ -22,6 +22,7 @@ export default function Products() {
 
   const handleUpdate = (data: Partial<Product>) => {
     if (selectedProduct) {
+      console.log(selectedProduct);
       updateProduct(
         { id: selectedProduct.id, data },
         {

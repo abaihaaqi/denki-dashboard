@@ -1,5 +1,5 @@
 import { Link, Outlet } from "react-router-dom";
-import { LogOut, User } from "lucide-react";
+import { LogOut, MessageCircle, User } from "lucide-react";
 import { useAuthStore } from "../stores/authStore";
 
 import Logo from "../assets/logo.png";
@@ -21,8 +21,19 @@ export default function Layout() {
             <div className="flex">
               <Link to="/" className="flex items-center">
                 <img src={Logo} className="w-10" />
-                <span className="ml-2 text-xl font-semibold">Dashboard</span>
+                <span className="hidden sm:inline ml-2 text-xl font-semibold">
+                  Dashboard
+                </span>
               </Link>
+              {isAuthenticated && (
+                <Link
+                  to="/chat"
+                  className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-indigo-600"
+                >
+                  <MessageCircle className="h-5 w-5 mr-1" />
+                  Chatbot
+                </Link>
+              )}
             </div>
             <div className="flex items-center">
               {isAuthenticated ? (

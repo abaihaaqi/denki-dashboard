@@ -5,6 +5,9 @@ import Layout from "./components/Layout";
 import Products from "./pages/Products";
 import Login from "./pages/Login";
 import ProtectedRoute from "./utils/ProtectedRoute";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import Chatbot from "./pages/Chatbot";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,11 +28,28 @@ function App() {
               index
               element={
                 <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="product"
+              element={
+                <ProtectedRoute>
                   <Products />
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="chat"
+              element={
+                <ProtectedRoute>
+                  <Chatbot />
+                </ProtectedRoute>
+              }
+            />
             <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
           </Route>
         </Routes>
       </BrowserRouter>

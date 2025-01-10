@@ -13,12 +13,7 @@ export const authService = {
   },
 
   async register(credentials: RegisterCredentials) {
-    const response = await api.post("/users", credentials);
-    return response.data;
-  },
-
-  async checkToken(token: string | undefined): Promise<User> {
-    const response = await api.post("/auth/check-token", token);
+    const response = await api.post("/auth/register", credentials);
     return response.data;
   },
 };

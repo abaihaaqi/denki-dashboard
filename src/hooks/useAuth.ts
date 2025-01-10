@@ -2,11 +2,23 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useAuthStore } from "../stores/authStore";
 import { authService } from "../services/auth";
-import type { LoginCredentials } from "../types/auth";
+import type { LoginCredentials, RegisterCredentials } from "../types/auth";
 
 export function useAuth() {
   const navigate = useNavigate();
   const { setUser, logout: storeLogout } = useAuthStore();
+
+  const register = async (credentials: RegisterCredentials) => {
+    try {
+      const res = await authService.register(credentials);
+      console.log(res);
+      toast.success("You can login now!");
+      navigate("/login");
+    } catch (error) {
+      toast.error("Internal server error");
+      throw error;
+    }
+  };
 
   const login = async (credentials: LoginCredentials) => {
     try {
@@ -34,6 +46,7 @@ export function useAuth() {
   };
 
   return {
+    register,
     login,
     logout,
   };

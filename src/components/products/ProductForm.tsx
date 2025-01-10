@@ -1,15 +1,13 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Product } from "../../types/product";
 
 const productSchema = z.object({
-  title: z.string().min(3, "Title must be at least 3 characters"),
+  name: z.string().min(3, "Title must be at least 3 characters"),
   price: z.number().min(0, "Price must be positive"),
   description: z.string().min(10, "Description must be at least 10 characters"),
-  categoryId: z.number(),
-  images: z.array(z.string().url()).min(1, "At least one image is required"),
+  image: z.string().url(),
 });
 
 type ProductFormData = z.infer<typeof productSchema>;
@@ -33,11 +31,10 @@ export default function ProductForm({
     resolver: zodResolver(productSchema),
     defaultValues: initialData
       ? {
-          title: initialData.title,
+          name: initialData.name,
           price: initialData.price,
           description: initialData.description,
-          categoryId: initialData.category.id,
-          images: initialData.images,
+          image: initialData.image,
         }
       : undefined,
   });
@@ -45,14 +42,14 @@ export default function ProductForm({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-gray-700">Title</label>
+        <label className="block text-sm font-medium text-gray-700">Name</label>
         <input
           type="text"
-          {...register("title")}
+          {...register("name")}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
         />
-        {errors.title && (
-          <p className="mt-1 text-sm text-red-600">{errors.title.message}</p>
+        {errors.name && (
+          <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
         )}
       </div>
 
@@ -91,11 +88,11 @@ export default function ProductForm({
         </label>
         <input
           type="url"
-          {...register("images.0")}
+          {...register("image")}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
         />
-        {errors.images && (
-          <p className="mt-1 text-sm text-red-600">{errors.images.message}</p>
+        {errors.image && (
+          <p className="mt-1 text-sm text-red-600">{errors.image.message}</p>
         )}
       </div>
 
